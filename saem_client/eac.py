@@ -1,4 +1,4 @@
-"""EAC-CPF records harvesting from SAEM-Ref OAI-PMH repository"""
+"""Download and upload of EAC-CPF data."""
 
 from __future__ import print_function
 from os import path
@@ -25,3 +25,26 @@ def fetch_eac_records(url, output, verbose=False, limit=None):
             tree.write(f)
         if limit is not None and idx == limit:
             break
+
+
+def upload_eac(instance, file):
+    import requests
+    from cwclientlib import cwproxy_for, cwproxy
+    proxy = cwproxy_for(instance)
+    headers = cwproxy.build_request_headers()
+
+    # XXX copy of CWProxy.post().
+    params = {
+        'url': proxy.build_url('/authorityrecord'),
+        'headers': headers,
+        'verify': proxy._ssl_verify,
+        'auth': proxy.auth,
+    }
+    if proxy.timeout:
+        params['timeout'] = proxy.timeout
+
+    with open(fpath) as f:
+        params['data'] = f
+        response = requests.post(**params)
+
+    print(response.json)

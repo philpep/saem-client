@@ -26,21 +26,29 @@ def _add_generic_arguments(parser):
 
 def main():
     from argparse import ArgumentParser
-    from .eac import fetch_eac_records
+    from .eac import fetch_eac_records, upload_eac
     from .skos import fetch_concepts
 
     parser = ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers()
     eac_parser = subparsers.add_parser(
-        'eac', help='download EAC-CPF authority records')
+        'eac-download', help='download EAC-CPF authority records')
     eac_parser.set_defaults(func=fetch_eac_records)
     _add_generic_arguments(eac_parser)
     skos_parser = subparsers.add_parser(
-        'skos', help='download a SKOS concept scheme')
+        'skos-download', help='download a SKOS concept scheme')
     _add_generic_arguments(skos_parser)
     skos_parser.add_argument(
         'scheme', help='identifier of the concept scheme')
     skos_parser.set_defaults(func=fetch_concepts)
+    eac_upload = subparsers.add_parser(
+        'eac-upload', help='upload an EAC-CPF file')
+    eac_upload.set_defaults(func=upload_eac)
+    eac_upload.add_argument(
+        'instance',
+        help='identifier of the SAEM-Ref instance defined in cwclientlibrc file')
+    eac_upload.add_argument(
+        'file', help='file path of the EAC-CPF file to upload')
     args = parser.parse_args()
     func = args.func
     del args.func
