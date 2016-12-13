@@ -8,7 +8,7 @@ from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry, MetadataReader
 
 
-def fetch_eac_records(url, output, verbose=False):
+def fetch_eac_records(url, output, verbose=False, limit=None):
     registry = MetadataRegistry()
     registry.registerReader('eac', MetadataReader)
 
@@ -16,7 +16,7 @@ def fetch_eac_records(url, output, verbose=False):
 
     records = client.listRecords(metadataPrefix='eac', set='authorityrecord')
 
-    for header, reader, _ in records:
+    for idx, (header, reader, _) in enumerate(records):
         identifier = header.identifier()
         what, name = identifier.rsplit('/')[-2:]
         fname = '{0}_{1}.xml'.format(what, name)
@@ -26,3 +26,5 @@ def fetch_eac_records(url, output, verbose=False):
         tree = etree.ElementTree(reader._fields[0])
         with open(fpath, 'wb') as f:
             tree.write(f)
+        if limit is not None and idx == limit:
+            break
