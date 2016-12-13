@@ -1,4 +1,4 @@
-"""Download records by harvesting the SAEM-Ref OAI-PMH repository"""
+"""Interact with a SAEM-Ref server"""
 
 from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry, MetadataReader
@@ -7,12 +7,15 @@ from oaipmh.metadata import MetadataRegistry, MetadataReader
 def _oai_client(url, prefix):
     registry = MetadataRegistry()
     registry.registerReader(prefix, MetadataReader)
+    if not url.endswith('/'):
+        url += '/'
+    url += 'oai'
     return Client(url, registry)
 
 
 def _add_generic_arguments(parser):
     import os
-    parser.add_argument('url', help='base URL of the OAI-PMH end point')
+    parser.add_argument('url', help='base URL of the SAEM-Ref instance')
     parser.add_argument('-o', '--output', default=os.getcwd(),
                         help='output directory (default to current directory)')
     parser.add_argument('--limit', type=int,

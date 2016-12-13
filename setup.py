@@ -1,21 +1,21 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='saem-oaipmh-client',
+    name='saem-client',
     version='0.1.0',
-    description='OAI-PMH client for SAEM',
-    url='https://github.com/logilab/saem-oaipmh-client',
+    description='Command-line client for a SAEM site',
+    url='https://framagit.org/saemproject/saem-client',
     author='Logilab SA',
     author_email='contact@logilab.fr',
     license='LGPL',
-    keywords='oaipmh client saem',
+    keywords='client saem oaipmh eac skos',
     packages=find_packages(exclude=['docs', 'tests']),
     install_requires=[
         'pyoai',
     ],
     entry_points={
         'console_scripts': [
-            'saem-oaipmh=saem_oaipmh_client:main',
+            'saem-client=saem_client:main',
         ],
     },
 )
