@@ -1,4 +1,13 @@
-"""Download EAC-CPF XML file by harvesting the SAEM-Ref OAI-PMH repository"""
+"""Download records by harvesting the SAEM-Ref OAI-PMH repository"""
+
+from oaipmh.client import Client
+from oaipmh.metadata import MetadataRegistry, MetadataReader
+
+
+def _oai_client(url, prefix):
+    registry = MetadataRegistry()
+    registry.registerReader(prefix, MetadataReader)
+    return Client(url, registry)
 
 
 def _add_generic_arguments(parser):
@@ -15,15 +24,21 @@ def _add_generic_arguments(parser):
 def main():
     from argparse import ArgumentParser
     from .eac import fetch_eac_records
+    from .skos import fetch_concepts
+
     parser = ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers()
     eac_parser = subparsers.add_parser(
         'eac', help='download EAC-CPF authority records')
+    eac_parser.set_defaults(func=fetch_eac_records)
     _add_generic_arguments(eac_parser)
     skos_parser = subparsers.add_parser(
         'skos', help='download a SKOS concept scheme')
     _add_generic_arguments(skos_parser)
     skos_parser.add_argument(
         'scheme', help='identifier of the concept scheme')
+    skos_parser.set_defaults(func=fetch_concepts)
     args = parser.parse_args()
-    fetch_eac_records(**vars(args))
+    func = args.func
+    del args.func
+    func(**vars(args))
