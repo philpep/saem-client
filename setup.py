@@ -15,7 +15,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'saem-oaipmh=saem_oaipmh_client.__main__',
+            'saem-oaipmh=saem_oaipmh_client:main',
         ],
     },
 )
