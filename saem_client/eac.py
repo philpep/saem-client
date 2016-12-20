@@ -32,6 +32,7 @@ def upload_eac(instance, file):
     from cwclientlib import cwproxy_for, cwproxy
     proxy = cwproxy_for(instance)
     headers = cwproxy.build_request_headers()
+    headers['Content-Type'] = 'application/json'
 
     # XXX copy of CWProxy.post().
     params = {
