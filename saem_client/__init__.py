@@ -2,11 +2,11 @@
 
 import os
 
-from oaipmh.client import Client
-from oaipmh.metadata import MetadataRegistry, MetadataReader
-
 
 def _oai_client(url, prefix):
+    from oaipmh.client import Client
+    from oaipmh.metadata import MetadataRegistry, MetadataReader
+
     registry = MetadataRegistry()
     registry.registerReader(prefix, MetadataReader)
     if not url.endswith('/'):
