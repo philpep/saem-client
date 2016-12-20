@@ -52,7 +52,7 @@ def main():
     eac_upload = subparsers.add_parser(
         'eac-upload', help='upload an EAC-CPF file')
     eac_upload.set_defaults(func=upload_eac)
-    _add_generic_arguments(parser)
+    _add_generic_arguments(eac_upload)
     eac_upload.add_argument(
         'file', help='file path of the EAC-CPF file to upload')
     eac_upload.add_argument('--credentials-file', default='cubicweb.yaml',
