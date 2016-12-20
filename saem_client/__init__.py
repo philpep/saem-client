@@ -1,5 +1,7 @@
 """Interact with a SAEM-Ref server"""
 
+import os
+
 from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry, MetadataReader
 
@@ -14,7 +16,6 @@ def _oai_client(url, prefix):
 
 
 def _add_generic_arguments(parser):
-    import os
     parser.add_argument('url', help='base URL of the SAEM-Ref instance')
     parser.add_argument('-o', '--output', default=os.getcwd(),
                         help='output directory (default to current directory)')
