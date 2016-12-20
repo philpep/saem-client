@@ -27,13 +27,23 @@ def fetch_eac_records(url, output, verbose=False, limit=None):
             break
 
 
-def upload_eac(instance, file):
+def upload_eac(url, file, credentials_file=None, verbose=False):
+    import yaml
     import requests
-    from cwclientlib import cwproxy_for, cwproxy
-    proxy = cwproxy_for(instance)
-    headers = cwproxy.build_request_headers()
-    headers['Content-Type'] = 'application/json'
+    from cwclientlib.cwproxy import SignedRequestAuth, CWProxy, build_request_headers
 
+    if credentials_file is None:
+        credentials_file = 'cubicweb.yaml'
+    with open(credentials_file) as stream:
+        credentials = yaml.load(stream)
+    if not ('id' in credentials and 'secret' in credentials):
+        raise Exception('{} is missing id or secret'.format(credentials_file))
+
+    auth = SignedRequestAuth(credentials['id'], credentials['secret'])
+    proxy = CWProxy(url, auth, verify=False)
+
+    headers = build_request_headers()
+    headers['Content-Type'] = 'application/json'
     # XXX copy of CWProxy.post().
     params = {
         'url': proxy.build_url('/authorityrecord'),
