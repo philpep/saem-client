@@ -43,7 +43,7 @@ def upload_eac(instance, file):
     if proxy.timeout:
         params['timeout'] = proxy.timeout
 
-    with open(fpath) as f:
+    with open(file) as f:
         params['data'] = f
         response = requests.post(**params)
 
