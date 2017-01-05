@@ -43,7 +43,7 @@ def upload_eac(url, file, credentials_file=None, verbose=False):
     proxy = CWProxy(url, auth, verify=False)
 
     headers = build_request_headers()
-    headers['Content-Type'] = 'application/json'
+    headers['Content-Type'] = 'application/xml'
     # XXX copy of CWProxy.post().
     params = {
         'url': proxy.build_url('/authorityrecord'),
