@@ -1,5 +1,6 @@
 """Interact with a SAEM-Ref server"""
 
+import iso8601
 import os
 
 
@@ -21,10 +22,22 @@ def _add_generic_arguments(parser):
                         help='display progress information')
 
 
+def _parse_date(datestr):
+    """Parse an iso8601 date into a naive datetime."""
+    dt = iso8601.parse_date(datestr, default_timezone=None)
+    return dt.replace(tzinfo=None)
+
+
 def _add_oai_arguments(parser):
     _add_generic_arguments(parser)
     parser.add_argument('-o', '--output', default=os.getcwd(),
                         help='output directory (default to current directory)')
+    parser.add_argument('--from',
+                        help='fetch records from this date (ISO 8601 datestamp)',
+                        type=_parse_date, dest='from_date')
+    parser.add_argument('--until',
+                        help='fetch records until this date (ISO 8601 datestamp)',
+                        type=_parse_date, dest='until_date')
     parser.add_argument('--limit', type=int,
                         help='fetch at much LIMIT records')
 

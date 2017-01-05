@@ -14,6 +14,7 @@ setup(
         'PyYAML',
         'cwclientlib',
         'pyoai',
+        'iso8601',
     ],
     entry_points={
         'console_scripts': [

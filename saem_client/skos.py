@@ -9,10 +9,12 @@ from lxml import etree
 from . import _oai_client
 
 
-def fetch_concepts(url, scheme, output, verbose=False, limit=None):
+def fetch_concepts(url, scheme, output, from_date=None, until_date=None,
+                   verbose=False, limit=None):
     client = _oai_client(url, 'rdf')
     records = client.listRecords(metadataPrefix='rdf',
-                                 set='concept:in_scheme:{0}'.format(scheme))
+                                 set='concept:in_scheme:{0}'.format(scheme),
+                                 from_=from_date, until=until_date)
 
     outdir = path.join(output, scheme.replace('/', '-'))
     if not path.isdir(outdir):

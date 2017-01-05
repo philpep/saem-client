@@ -8,10 +8,12 @@ from lxml import etree
 from . import _oai_client
 
 
-def fetch_eac_records(url, output, verbose=False, limit=None):
+def fetch_eac_records(url, output, from_date=None, until_date=None,
+                      verbose=False, limit=None):
     client = _oai_client(url, 'eac')
 
-    records = client.listRecords(metadataPrefix='eac', set='authorityrecord')
+    records = client.listRecords(metadataPrefix='eac', set='authorityrecord',
+                                 from_=from_date, until=until_date)
 
     for idx, (header, reader, _) in enumerate(records):
         identifier = header.identifier()
