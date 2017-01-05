@@ -11,6 +11,7 @@ setup(
     keywords='client saem oaipmh eac skos',
     packages=find_packages(exclude=['docs', 'tests']),
     install_requires=[
+        'yaml',
         'cwclientlib',
         'pyoai',
     ],
