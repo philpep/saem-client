@@ -60,7 +60,7 @@ def upload_eac(url, file, credentials_file=None, verbose=False):
         params['timeout'] = proxy.timeout
 
     with open(file) as f:
-        params['data'] = f
+        params['data'] = f.read()
         response = requests.post(**params)
 
     print(response.json)
