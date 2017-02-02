@@ -38,6 +38,9 @@ def upload_eac(url, file, credentials_file=None, verbose=False):
         credentials_file = 'cubicweb.yaml'
     with open(credentials_file) as stream:
         credentials = yaml.load(stream)
+    if not isinstance(credentials, dict):
+        raise Exception('{} is not correctly formatted, a dictionary is expected'
+                        .format(credentials_file))
     if not ('id' in credentials and 'secret' in credentials):
         raise Exception('{} is missing id or secret'.format(credentials_file))
 
