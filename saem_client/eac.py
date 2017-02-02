@@ -63,4 +63,4 @@ def upload_eac(url, file, credentials_file=None, verbose=False):
         params['data'] = f.read()
         response = requests.post(**params)
 
-    print(response.json)
+    print(response.json())
