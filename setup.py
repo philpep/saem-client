@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='saem-client',
+    name='saemref-client',
     version='0.1.0',
     description='Command-line client for a SAEM site',
     url='https://framagit.org/saemproject/saem-client',
@@ -18,7 +18,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'saem-client=saem_client:main',
+            'saemref-client=saemref_client:main',
         ],
     },
 )
