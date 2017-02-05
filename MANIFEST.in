@@ -2,3 +2,6 @@ include LICENSE.txt
 include DEV.txt
 include tox.ini
 include saemref-client.py
+include test.py
+
+prune .gitlab-ci.yml
