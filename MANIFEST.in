@@ -5,3 +5,4 @@ include saemref-client.py
 include test.py
 
 prune .gitlab-ci.yml
+prune appveyor.yml

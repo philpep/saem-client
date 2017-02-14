@@ -1,0 +1,19 @@
+install:
+  - "set PATH=C:\\Miniconda;C:\\Miniconda\\Scripts;%PATH%"
+  - "conda create -q --yes -n test python=2.7"
+  - "activate test"
+  - "python --version"
+  - "conda install -q --yes lxml"
+  - "pip install pyinstaller"
+  - "pip install -e ."
+
+build_script:
+  - "pyinstaller --hidden-import six --hidden-import packaging --hidden-import packaging.version --hidden-import packaging.requirements --clean saemref-client.py"
+  - "cd dist && 7z a ..\\saemref-client.zip saemref-client\\ && cd .."
+
+test_script:
+  - "dist\\saemref-client\\saemref-client.exe --help"
+
+artifacts:
+  # Archive the generated packages in the ci.appveyor.com build report.
+  - path: "saemref-client.zip"
